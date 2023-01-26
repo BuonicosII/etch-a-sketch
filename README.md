@@ -1,0 +1,1 @@
+Questa è la mia repo per il progetto Etch-a-sketch di The Odin Project
