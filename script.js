@@ -1,15 +1,26 @@
 //crea di default una board con 16 div al primo caricamento della pagina
 
 let board = document.querySelector('#board');
+let colorSelection = 'black';
+let userChoice = 16;
+let squareMeter = 640 / userChoice;
+
+function rainbowMode () {
+    let variableR = Math.floor(Math.random() * (255 - 0 + 1) + 0);
+    let variableG = Math.floor(Math.random() * (255 - 0 + 1) + 0);
+    let variableB = Math.floor(Math.random() * (255 - 0 + 1) + 0);
+    let randomColor = `rgb(${variableR}, ${variableG}, ${variableB})`;
+    return randomColor;
+}
 
 function initializeBoard () {
-    for (let i = 1; i <= 256; i++) {
+    for (let i = 1; i <= (+userChoice*+userChoice); i++) {
         let pixel = document.createElement('div')
         pixel.setAttribute("class", "board-pixel");
-        pixel.setAttribute('style','box-sizing: border-box; border: solid black 1px; height: 40px; width: 40px;'); 
+        pixel.setAttribute('style',`height: ${squareMeter}px; width: ${squareMeter}px;`); 
         board.appendChild(pixel);
         pixel.addEventListener('mouseover', function (e) {
-            e.target.style.background = 'black';
+            e.target.style.background = `${colorSelection}`;
           });
     }
 
@@ -17,17 +28,10 @@ function initializeBoard () {
 
 initializeBoard();
 
-let newGridButton = document.querySelector('#newGrid');
-newGridButton.addEventListener('click', function () {
+//Pulsante con funzione che permette all'utente di resettare l'ultima grid
 
-    let userChoice = +prompt("How many squares? Please choose a number between 2 and 180", " ");
-
-    if (typeof userChoice !== "number") {
-        alert("Insert a number!");
-    } else if (userChoice < 2 || userChoice > 180) {
-        alert("Insert a valid number!");
-    } else {
-    let squareMeter = 640 / userChoice;
+let resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', function () {
 
     while (board.hasChildNodes()) {
         board.removeChild(board.firstChild);
@@ -39,9 +43,43 @@ newGridButton.addEventListener('click', function () {
         pixel.setAttribute('style',`height: ${squareMeter}px; width: ${squareMeter}px;`); 
         board.appendChild(pixel);
         pixel.addEventListener('mouseover', function (e) {
-            e.target.style.background = 'black';
+            e.target.style.background = `${colorSelection}`;
           });
     };
-};
+})
+
+//Pulsante con funzione che richiede l'input di un numero all'utente per la creazione di una nuova grid
+
+let newGridButton = document.querySelector('#newGrid');
+newGridButton.addEventListener('click', function () {
+
+    let newChoice = +prompt("How many squares? Please choose a number between 2 and 100", " ");
+    let newSquareMeter = 640 / newChoice;
+
+    if (typeof newChoice !== "number") {
+        alert("Insert a number!");
+    } else if (newChoice < 2 || newChoice > 100) {
+        alert("Insert a valid number!");
+    } else {
+
+    while (board.hasChildNodes()) {
+        board.removeChild(board.firstChild);
+      }
+
+    for (let i = 1; i <= (+newChoice*+newChoice); i++) {
+        let pixel = document.createElement('div')
+        pixel.setAttribute("class", "board-pixel");
+        pixel.setAttribute('style',`height: ${newSquareMeter}px; width: ${newSquareMeter}px;`); 
+        board.appendChild(pixel);
+        pixel.addEventListener('mouseover', function (e) {
+            e.target.style.background = `${colorSelection}`;
+          });
+    };
+    };
+
+    userChoice = newChoice;
+    squareMeter = newSquareMeter;
 }
 )
+
+// Pulsante che permette lo switch al rainbow mode
