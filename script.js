@@ -1,7 +1,6 @@
 //crea di default una board con 16 div al primo caricamento della pagina
 
 let board = document.querySelector('#board');
-let colorSelection = 'black';
 let userChoice = 16;
 let squareMeter = 640 / userChoice;
 
@@ -13,6 +12,7 @@ function rainbowMode () {
     return randomColor;
 }
 
+
 function initializeBoard () {
     for (let i = 1; i <= (+userChoice*+userChoice); i++) {
         let pixel = document.createElement('div')
@@ -20,7 +20,7 @@ function initializeBoard () {
         pixel.setAttribute('style',`height: ${squareMeter}px; width: ${squareMeter}px;`); 
         board.appendChild(pixel);
         pixel.addEventListener('mouseover', function (e) {
-            e.target.style.background = `${colorSelection}`;
+            e.target.style.background = 'black';
           });
     }
 
@@ -43,7 +43,7 @@ resetButton.addEventListener('click', function () {
         pixel.setAttribute('style',`height: ${squareMeter}px; width: ${squareMeter}px;`); 
         board.appendChild(pixel);
         pixel.addEventListener('mouseover', function (e) {
-            e.target.style.background = `${colorSelection}`;
+            e.target.style.background = 'black';
           });
     };
 })
@@ -72,7 +72,7 @@ newGridButton.addEventListener('click', function () {
         pixel.setAttribute('style',`height: ${newSquareMeter}px; width: ${newSquareMeter}px;`); 
         board.appendChild(pixel);
         pixel.addEventListener('mouseover', function (e) {
-            e.target.style.background = `${colorSelection}`;
+            e.target.style.background = 'black';
           });
     };
     };
@@ -83,3 +83,27 @@ newGridButton.addEventListener('click', function () {
 )
 
 // Pulsante che permette lo switch al rainbow mode
+
+let rainbowModeButton = document.querySelector('#rainbowMode');
+rainbowModeButton.addEventListener('click', function () {
+    let rainbowPixels = document.querySelectorAll('.board-pixel');
+    rainbowPixels.forEach((pixel) => {
+        pixel.addEventListener('mouseover', function (e) {
+            e.target.style.background = rainbowMode();
+            }
+        );
+    })
+})
+
+//Pulsante che permette lo switch al classic mode
+
+let classicModeButton = document.querySelector('#classicMode');
+classicModeButton.addEventListener('click', function () {
+    let classicPixels = document.querySelectorAll('.board-pixel');
+    classicPixels.forEach((pixel) => {
+        pixel.addEventListener('mouseover', function (e) {
+            e.target.style.background = 'black';
+            }
+        );
+    })
+})
