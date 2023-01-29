@@ -12,6 +12,18 @@ function rainbowMode () {
     return randomColor;
 }
 
+function classic (event) {
+    event.target.style.background = 'black';
+}
+
+function rainbow (event) {
+    event.target.style.background = rainbowMode();
+}
+
+function darken (event) {
+    let baseBrightness = event.target.style;
+    event.target.style.filter = `brightness(${baseBrightness}%)`;
+}
 
 function initializeBoard () {
     for (let i = 1; i <= (+userChoice*+userChoice); i++) {
@@ -19,9 +31,7 @@ function initializeBoard () {
         pixel.setAttribute("class", "board-pixel");
         pixel.setAttribute('style',`height: ${squareMeter}px; width: ${squareMeter}px;`); 
         board.appendChild(pixel);
-        pixel.addEventListener('mouseover', function (e) {
-            e.target.style.background = 'black';
-          });
+        pixel.addEventListener('mouseover', classic);
     }
 
 }
@@ -42,9 +52,7 @@ resetButton.addEventListener('click', function () {
         pixel.setAttribute("class", "board-pixel");
         pixel.setAttribute('style',`height: ${squareMeter}px; width: ${squareMeter}px;`); 
         board.appendChild(pixel);
-        pixel.addEventListener('mouseover', function (e) {
-            e.target.style.background = 'black';
-          });
+        pixel.addEventListener('mouseover', classic); 
     };
 })
 
@@ -71,9 +79,7 @@ newGridButton.addEventListener('click', function () {
         pixel.setAttribute("class", "board-pixel");
         pixel.setAttribute('style',`height: ${newSquareMeter}px; width: ${newSquareMeter}px;`); 
         board.appendChild(pixel);
-        pixel.addEventListener('mouseover', function (e) {
-            e.target.style.background = 'black';
-          });
+        pixel.addEventListener('mouseover', classic);
     };
     };
 
@@ -88,12 +94,12 @@ let rainbowModeButton = document.querySelector('#rainbowMode');
 rainbowModeButton.addEventListener('click', function () {
     let rainbowPixels = document.querySelectorAll('.board-pixel');
     rainbowPixels.forEach((pixel) => {
-        pixel.addEventListener('mouseover', function (e) {
-            e.target.style.background = rainbowMode();
+        pixel.removeEventListener('mouseover', classic);
+        pixel.removeEventListener('mouseover', darken);
+        pixel.addEventListener('mouseover', rainbow)
             }
         );
     })
-})
 
 //Pulsante che permette lo switch al classic mode
 
@@ -101,9 +107,20 @@ let classicModeButton = document.querySelector('#classicMode');
 classicModeButton.addEventListener('click', function () {
     let classicPixels = document.querySelectorAll('.board-pixel');
     classicPixels.forEach((pixel) => {
-        pixel.addEventListener('mouseover', function (e) {
-            e.target.style.background = 'black';
-            }
-        );
+        pixel.removeEventListener('mouseover', rainbow);
+        pixel.removeEventListener('mouseover', darken);
+        pixel.addEventListener('mouseover', classic)
+    });
+    })
+
+//Pulsante che permette lo switch al darken mode
+
+let darkenModeButton = document.querySelector('#darken');
+darkenModeButton.addEventListener('click', function () {
+    let darkenedPixels = document.querySelectorAll('.board-pixel');
+    darkenedPixels.forEach((pixel) => {
+        pixel.removeEventListener('mouseover', classic);
+        pixel.removeEventListener('mouseover', rainbow);
+        pixel.addEventListener('mouseover', darken);
     })
 })
