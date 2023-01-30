@@ -21,15 +21,25 @@ function rainbow (event) {
 }
 
 function darken (event) {
-    let baseBrightness = event.target.style;
-    event.target.style.filter = `brightness(${baseBrightness}%)`;
+    let baseBrightness = event.target.style.background;
+    let rgbVariable = baseBrightness.slice(4, (baseBrightness.length-2));
+    let rgbArray = rgbVariable.split(",");
+    let newRgbValue = 'rgb('
+    for (let i = 0; i < rgbArray.length; i++) {
+        if (i === rgbArray.length - 1) {
+          newRgbValue += `${rgbArray[i]-25})`
+        } else {
+            newRgbValue += `${rgbArray[i]-25}, `
+        }
+      }
+      event.target.style.background = newRgbValue;
 }
 
 function initializeBoard () {
     for (let i = 1; i <= (+userChoice*+userChoice); i++) {
         let pixel = document.createElement('div')
         pixel.setAttribute("class", "board-pixel");
-        pixel.setAttribute('style',`height: ${squareMeter}px; width: ${squareMeter}px;`); 
+        pixel.setAttribute('style',`background: rgb(255,255,255); height: ${squareMeter}px; width: ${squareMeter}px;`); 
         board.appendChild(pixel);
         pixel.addEventListener('mouseover', classic);
     }
