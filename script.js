@@ -22,14 +22,14 @@ function rainbow (event) {
 
 function darken (event) {
     let baseBrightness = event.target.style.background;
-    let rgbVariable = baseBrightness.slice(4, (baseBrightness.length-2));
+    let rgbVariable = baseBrightness.slice(4, (baseBrightness.length-1));
     let rgbArray = rgbVariable.split(",");
     let newRgbValue = 'rgb('
-    for (let i = 0; i < rgbArray.length; i++) {
-        if (i === rgbArray.length - 1) {
-          newRgbValue += `${rgbArray[i]-25})`
+    for (let i = 0; i <= 2; i++) {
+        if (i === 2) {
+          newRgbValue += `${rgbArray[i]-15})`
         } else {
-            newRgbValue += `${rgbArray[i]-25}, `
+            newRgbValue += `${rgbArray[i]-15},`
         }
       }
       event.target.style.background = newRgbValue;
@@ -60,7 +60,7 @@ resetButton.addEventListener('click', function () {
     for (let i = 1; i <= (+userChoice*+userChoice); i++) {
         let pixel = document.createElement('div')
         pixel.setAttribute("class", "board-pixel");
-        pixel.setAttribute('style',`height: ${squareMeter}px; width: ${squareMeter}px;`); 
+        pixel.setAttribute('style',`background: rgb(255,255,255); height: ${squareMeter}px; width: ${squareMeter}px;`); 
         board.appendChild(pixel);
         pixel.addEventListener('mouseover', classic); 
     };
@@ -87,7 +87,7 @@ newGridButton.addEventListener('click', function () {
     for (let i = 1; i <= (+newChoice*+newChoice); i++) {
         let pixel = document.createElement('div')
         pixel.setAttribute("class", "board-pixel");
-        pixel.setAttribute('style',`height: ${newSquareMeter}px; width: ${newSquareMeter}px;`); 
+        pixel.setAttribute('style',`background: rgb(255,255,255); height: ${newSquareMeter}px; width: ${newSquareMeter}px;`); 
         board.appendChild(pixel);
         pixel.addEventListener('mouseover', classic);
     };
